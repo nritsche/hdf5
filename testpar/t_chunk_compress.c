@@ -6,10 +6,10 @@
 
 #define _MPI
 #define _DSET2
-//#define _COMPRESS
+#define _COMPRESS
 
-#define NPROC 4
-#define CHUNK0 4
+#define NPROC 2
+#define CHUNK0 2
 
 // Equivalent to original gist
 // Works on 1.10.5 with patch, crashes on 1.10.5 vanilla and hangs on 1.10.6
