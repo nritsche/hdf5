@@ -43,7 +43,7 @@ foreach (skiptest ${SKIP_tests})
   set (SKIP_testphdf5 "${SKIP_testphdf5};-x;${skiptest}")
 endforeach ()
 
-add_test (NAME MPI_TEST_testphdf5 COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:testphdf5> ${MPIEXEC_POSTFLAGS} ${SKIP_testphdf5})
+add_test (NAME MPI_TEST_testphdf5 COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 4 --oversubscribe ${MPIEXEC_PREFLAGS} $<TARGET_FILE:testphdf5> ${MPIEXEC_POSTFLAGS} ${SKIP_testphdf5})
 set_tests_properties (MPI_TEST_testphdf5 PROPERTIES
     FIXTURES_REQUIRED par_clear_testphdf5
     ENVIRONMENT "HDF5_ALARM_SECONDS=3600;srcdir=${HDF5_TEST_PAR_BINARY_DIR}"
@@ -56,7 +56,7 @@ set (last_test "MPI_TEST_testphdf5")
 
 #execute the skipped tests
 foreach (skiptest ${SKIP_tests})
-  add_test (NAME MPI_TEST_testphdf5_${skiptest} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:testphdf5> ${MPIEXEC_POSTFLAGS} -o ${skiptest})
+  add_test (NAME MPI_TEST_testphdf5_${skiptest} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 4 --oversubscribe ${MPIEXEC_PREFLAGS} $<TARGET_FILE:testphdf5> ${MPIEXEC_POSTFLAGS} -o ${skiptest})
   set_tests_properties (MPI_TEST_testphdf5_${skiptest} PROPERTIES
       FIXTURES_REQUIRED par_clear_testphdf5
       ENVIRONMENT "HDF5_ALARM_SECONDS=3600;srcdir=${HDF5_TEST_PAR_BINARY_DIR}"
@@ -103,7 +103,7 @@ add_test (
 set_tests_properties (MPI_TEST-clear-objects PROPERTIES FIXTURES_SETUP par_clear_objects)
 
 foreach (h5_testp ${H5P_TESTS})
-  add_test (NAME MPI_TEST_${h5_testp} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${h5_testp}> ${MPIEXEC_POSTFLAGS})
+  add_test (NAME MPI_TEST_${h5_testp} COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 4 --oversubscribe ${MPIEXEC_PREFLAGS} $<TARGET_FILE:${h5_testp}> ${MPIEXEC_POSTFLAGS})
   set_tests_properties (MPI_TEST_${h5_testp} PROPERTIES
       FIXTURES_REQUIRED par_clear_objects
       ENVIRONMENT "HDF5_ALARM_SECONDS=3600;srcdir=${HDF5_TEST_PAR_BINARY_DIR}"
